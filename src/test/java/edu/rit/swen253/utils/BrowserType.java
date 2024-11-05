@@ -56,11 +56,11 @@ public enum BrowserType {
     void configureDriverExecutable(OperatingSystem operatingSystem) {
       switch (operatingSystem) {
         case WINDOWS ->
-          System.setProperty("webdriver.gecko.driver", driverHome + "/windows/geckodriver.exe");
+          System.setProperty("webdriver.firefox.marionette", driverHome + "/windows/geckodriver.exe");
         case MAC_OSX ->
-          System.setProperty("webdriver.gecko.driver", driverHome + "/mac/geckodriver");
+          System.setProperty("webdriver.firefox.marionette", driverHome + "/mac/geckodriver");
         case LINUX ->
-          System.setProperty("webdriver.gecko.driver", driverHome + "/linux/geckodriver");
+          System.setProperty("webdriver.firefox.marionette", driverHome + "/linux/geckodriver");
       }
     }
 
