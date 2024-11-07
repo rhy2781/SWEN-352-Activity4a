@@ -47,7 +47,7 @@ public class RitRatingsTest extends AbstractWebTest {
     final List<RatingInfoView> ratingInfoViews = homePage.getRatingViews();
     assertEquals(6, ratingInfoViews.size(), "Number of views should be 6");
     // prepare for next test
-    firstRatingInfo = ratingInfoViews.getFirst();
+    firstRatingInfo = ratingInfoViews.get(1);
   }
 
   /**
@@ -57,7 +57,7 @@ public class RitRatingsTest extends AbstractWebTest {
   @Order(3)
   public void inspectFirstRatingInfo() {
     assertAll("group assertions"
-      , () -> assertEquals("5th", firstRatingInfo.getRating())
+      , () -> assertEquals("6th", firstRatingInfo.getRating())
       , () -> assertEquals("Among Top Schools for Co-op or Internship Programs", firstRatingInfo.getTitle())
     );
   }
