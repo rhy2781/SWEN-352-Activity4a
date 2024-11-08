@@ -7,13 +7,14 @@ import java.util.logging.Logger;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
+
 import edu.rit.swen253.page.AbstractPage;
 import edu.rit.swen253.utils.DomElement;
 import edu.rit.swen253.utils.SeleniumUtils;
 
 public class YoutubeHome extends AbstractPage {
 
-    private static final Logger logger = Logger.getLogger(YoutubeHome.class.getName());
+    private static final Logger LOGG = Logger.getLogger(YoutubeHome.class.getName());
     private static final By MAIN_CONTENT_FINDER = By
             .cssSelector("div#content.style-scope.ytd-app");
 
@@ -37,10 +38,6 @@ public class YoutubeHome extends AbstractPage {
         DomElement searchButton = mainContent.findChildBy(By.cssSelector("button#search-icon-legacy"));
         searchButton.click();
 
-        waitForSearchResults();
-    }
-
-    private void waitForSearchResults() {
         SeleniumUtils.getShortWait().until(
                 driver -> driver.findElement(By.cssSelector("ytd-search")));
     }
