@@ -3,22 +3,25 @@ package edu.rit.swen253.test.youtube;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
-import edu.rit.swen253.page.youtube.YoutubeHome;
+import edu.rit.swen253.page.youtube.YouTubeHome;
 import edu.rit.swen253.page.youtube.YoutubeSearchResults;
 import edu.rit.swen253.test.AbstractWebTest;
 import edu.rit.swen253.utils.SeleniumUtils;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class YoutubeSearchResultsTest extends AbstractWebTest {
+public class YouTubeSearchResultsTest extends AbstractWebTest {
 
-    private YoutubeHome homePage;
-    private YoutubeSearchResults firstSearchResults;
+    private static final Logger LOGG = Logger.getLogger(YouTubeHome.class.getName());
+
+    private YouTubeHome homePage;
+    private YoutubeSearchResults firstResult;
 
     /**
      * Navigate to the youtube home page
@@ -26,7 +29,7 @@ public class YoutubeSearchResultsTest extends AbstractWebTest {
     @Test
     @Order(1)
     public void navigateToHomePage() {
-        homePage = navigateToPage("https://www.youtube.com/", YoutubeHome::new);
+        homePage = navigateToPage("https://www.youtube.com/", YouTubeHome::new);
     }
 
     /**
@@ -40,8 +43,12 @@ public class YoutubeSearchResultsTest extends AbstractWebTest {
         List<YoutubeSearchResults> searchResults = homePage.getSearchResults();
         assertTrue(searchResults.size() > 0, "No search results found");
 
-        firstSearchResults = searchResults.get(0);
-        assertNotNull(firstSearchResults, "Run test again, firstSearchResult is null");
+        firstResult = searchResults.get(0);
+
+        LOGG.info("-----------------------------");
+        LOGG.info("First result Title: " + firstResult.getTitle());
+        LOGG.info("First result URL: " + firstResult.getUrl());
+        LOGG.info("-----------------------------");
     }
 
     /**
@@ -50,8 +57,8 @@ public class YoutubeSearchResultsTest extends AbstractWebTest {
     @Test
     @Order(3)
     public void testFirstResult() {
-        String title = firstSearchResults.getTitle();
-        assertEquals("Me at the zoo", title);
+        String title = firstResult.getTitle();
+        assertEquals("Me at the zoo", title, "First result title does not match expected title");
     }
 
     /**
@@ -60,13 +67,13 @@ public class YoutubeSearchResultsTest extends AbstractWebTest {
     @Test
     @Order(4)
     public void testClickFirstResult() {
-        firstSearchResults.click();
+        firstResult.click();
 
         String expectedTitle = "Me at the zoo - YouTube";
         SeleniumUtils.getShortWait().until(
                 driver -> driver.getTitle().contains(expectedTitle));
 
         String actualTitle = SeleniumUtils.getDriver().getTitle();
-        assertTrue(expectedTitle.equals(actualTitle));
+        assertTrue(expectedTitle.equals(actualTitle), "Page title after clicking does not match expected title");
     }
 }
