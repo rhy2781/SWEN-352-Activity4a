@@ -41,6 +41,7 @@ public class YoutubeSearchResultsTest extends AbstractWebTest {
         assertTrue(searchResults.size() > 0, "No search results found");
 
         firstSearchResults = searchResults.get(0);
+        assertNotNull(firstSearchResults, "Run test again, firstSearchResult is null");
     }
 
     /**
