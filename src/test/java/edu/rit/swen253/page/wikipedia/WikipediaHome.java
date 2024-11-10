@@ -67,28 +67,28 @@ public class WikipediaHome extends AbstractPage {
         }
     }
 
-    public List<WikipediaSearchResults> getSearchResults() {
-        // Wait for the search results container to be present (new page structure)
-        SeleniumUtils.getLongWait().until(ExpectedConditions.presenceOfElementLocated(SEARCH_RESULTS_CONTAINER));
+    // public List<WikipediaSearchResults> getSearchResults() {
+    //     // Wait for the search results container to be present (new page structure)
+    //     SeleniumUtils.getLongWait().until(ExpectedConditions.presenceOfElementLocated(SEARCH_RESULTS_CONTAINER));
     
-        // Re-initialize the main content and search results after the page reloads
-        mainContent = findOnPage(MAIN_CONTENT_SEARCH);
+    //     // Re-initialize the main content and search results after the page reloads
+    //     mainContent = findOnPage(MAIN_CONTENT_SEARCH);
     
-        // Find the container of search results
-        DomElement searchResultsContainer = mainContent.findChildBy(SEARCH_RESULTS_CONTAINER);
+    //     // Find the container of search results
+    //     DomElement searchResultsContainer = mainContent.findChildBy(SEARCH_RESULTS_CONTAINER);
     
-        // Make sure the list is not empty (valid results)
-        List<DomElement> resultElements = searchResultsContainer.findChildBy(By.cssSelector("ul.mw-search-results"))
-                .findChildrenBy(By.cssSelector("li.mw-search-result"));
+    //     // Make sure the list is not empty (valid results)
+    //     List<DomElement> resultElements = searchResultsContainer.findChildBy(By.cssSelector("ul.mw-search-results"))
+    //             .findChildrenBy(By.cssSelector("li.mw-search-result"));
     
-        if (resultElements.isEmpty()) {
-            LOGG.warning("No search results found.");
-            return List.of();  // Return an empty list if no results are found
-        }
+    //     if (resultElements.isEmpty()) {
+    //         LOGG.warning("No search results found.");
+    //         return List.of();  // Return an empty list if no results are found
+    //     }
     
         // Return the search results
         //return resultElements.stream()
         //        .map(WikipediaSearchResults::new)
           //      .toList();
-    }
+    // }
 }
