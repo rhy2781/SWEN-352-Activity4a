@@ -74,6 +74,13 @@ public class GoogleTest extends AbstractWebTest {
         LOGGER.info("First result URL: " + url);
         LOGGER.info("-----------------------------");
 
+        // get information on the right hand side
+        DomElement description = resultsPage.getRHS().findChildBy(By.className("kno-rdesc"));
+        assertEquals(
+            "Description\nPokémon is a Japanese media franchise consisting of video games, animated series and films, "
+            + "a trading card game, and other related media. The franchise takes place in a shared universe in which"
+            + " humans co-exist with creatures known as Pokémon, a large variety of species endowed with special " 
+            + "powers. Wikipedia",  description.getText());
 
         // click the first result
         result.findChildBy(By.xpath(".//a")).click();

@@ -30,4 +30,7 @@ public class GoogleSearchResultsPage extends AbstractPage{
         DomElement rso = mainContentPanel.findChildBy(By.id("rso"));
         return rso.findChildBy(By.cssSelector("div.g"));
     }
+    public DomElement getRHS(){
+        return mainContentPanel.findChildBy(By.id("rhs"));
+    }
 }
