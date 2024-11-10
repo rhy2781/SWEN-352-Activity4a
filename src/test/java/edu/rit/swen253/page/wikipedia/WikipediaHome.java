@@ -18,7 +18,7 @@ public class WikipediaHome extends AbstractPage {
 
     private static final Logger LOGG = Logger.getLogger(WikipediaHome.class.getName());
     private static final By MAIN_CONTENT_FINDER = By.tagName("main");
-    private static final By MAIN_CONTENT_SEARCH = By.cssSelector("div#mw-mf-viewport");  // Update this selector for new content
+    private static final By MAIN_CONTENT_SEARCH = By.cssSelector("div#mw-mf-viewport");  
     private static final By SEARCH_RESULTS_CONTAINER = By.cssSelector("div.mw-search-results-container");
 
     private DomElement mainContent;
@@ -87,8 +87,8 @@ public class WikipediaHome extends AbstractPage {
         }
     
         // Return the search results
-        return resultElements.stream()
-                .map(WikipediaSearchResults::new)
-                .toList();
+        //return resultElements.stream()
+        //        .map(WikipediaSearchResults::new)
+          //      .toList();
     }
 }

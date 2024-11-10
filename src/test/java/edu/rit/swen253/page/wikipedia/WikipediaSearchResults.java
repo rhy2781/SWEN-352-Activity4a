@@ -1,26 +1,47 @@
 package edu.rit.swen253.page.wikipedia;
 
-import org.openqa.selenium.By;
+import static org.junit.jupiter.api.Assertions.fail;
 
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
+
+import edu.rit.swen253.page.AbstractPage;
 import edu.rit.swen253.utils.DomElement;
 
-public class WikipediaSearchResults {
+public class WikipediaSearchResults extends AbstractPage{
+    private static final By MAIN_CONTENT_FINDER = By.className("mw-body");
 
-    private final DomElement wikiElement;
+    private DomElement mainContentPanel;
 
-    public WikipediaSearchResults(final DomElement viewContainer) {
-        this.wikiElement = viewContainer;
+    public WikipediaSearchResults(){
+        super();
+        try{
+            mainContentPanel = findOnPage(MAIN_CONTENT_FINDER);
+        }catch(TimeoutException e){
+            fail("Main content panel is not found 2");
+        }
     }
 
-    public String getTitle() {
-        return wikiElement.findChildBy(By.cssSelector("a[title='Realm of the Mad God']")).getText();
+    public String getSearchTitle(){
+        DomElement searchResults = mainContentPanel.findChildBy(By.cssSelector("a[title='Realm of the Mad God']"));
+        //List<DomElement> results = searchResults.findChildrenBy(By.xpath(".//cite"));
+        //results.removeIf(n -> n.getText().equals(""));
+        return searchResults.getText();
     }
+
+   
+   // public WikipediaSearchResults(final DomElement viewContainer) {
+     //   this.wikiElement = viewContainer;
+   // }
 
     public String getUrl() {
-        return wikiElement.findChildBy(By.cssSelector("a[data-serp-pos='0']")).getAttribute("href");
+        return mainContentPanel.findChildBy(By.cssSelector("a[data-serp-pos='0']")).getAttribute("href");
     }
 
     public void click() {
-        wikiElement.findChildBy(By.cssSelector("a[data-serp-pos='0']")).click();
+        mainContentPanel.findChildBy(By.cssSelector("a[data-serp-pos='0']")).click();
     }
+
 }
