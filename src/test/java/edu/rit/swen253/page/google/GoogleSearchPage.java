@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.TimeoutException;
 
 import edu.rit.swen253.page.AbstractPage;
@@ -23,10 +24,15 @@ public class GoogleSearchPage extends AbstractPage{
         }
     }
 
-    public DomElement getSearchComponent(){
-        DomElement res = null;
-        res = mainContentPanel.findChildBy(By.name("q"));
-        return res;
+    public String insertTextIntoSearchComponent(String query){
+        DomElement search = mainContentPanel.findChildBy(By.name("q"));
+        search.enterText(query);    
+        return search.getInputValue();
+    }
+
+    public void executeSearch(){
+        DomElement search = mainContentPanel.findChildBy(By.name("q"));  
+        search.enterText(Keys.ENTER);
     }
 
 }

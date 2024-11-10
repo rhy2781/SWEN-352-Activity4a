@@ -25,6 +25,8 @@ public class GoogleTest extends AbstractWebTest {
 
     private GoogleSearchPage searchPage;
     private GoogleSearchResultsPage resultsPage;
+    private static final String query = "openai";
+    private static final String expectedURL = "https://openai.com/";
     private static final Logger LOGGER = Logger.getLogger(GoogleSearchResultsPage.class.getName());
 
 
@@ -42,13 +44,11 @@ public class GoogleTest extends AbstractWebTest {
      */
     @Test
     @Order(2)
-    public void insertTextInSearchField(){
-        DomElement search = searchPage.getSearchComponent();
-        search.enterText("pokemon");    
-        assertEquals("pokemon", search.getInputValue());
-        search.enterText(Keys.ENTER);
+    public void searchFromGoogle(){
+        String res = searchPage.insertTextIntoSearchComponent(query);
+        assertEquals(query, res);
+        searchPage.executeSearch();
         searchPage.waitUntilGone();
-
         resultsPage = assertNewPage(GoogleSearchResultsPage::new);
     }
 
@@ -60,34 +60,20 @@ public class GoogleTest extends AbstractWebTest {
     @Test
     @Order(3)
     public void searchResultsPage(){
-        // ensure that our search bar contains the same text that we searched with
-        DomElement search = resultsPage.getSearchComponent();
-        assertEquals("pokemon", search.getInputValue());
+        // ensure that our search component on the results page shows the same phrase that we queried for
+        assertEquals(query, resultsPage.getQueryInSearchComponent());
 
-        // get the url and link for the first result
-        DomElement result = resultsPage.getFirstSearchResult();
-        String url = result.findChildBy(By.xpath(".//a")).getAttribute("href");
-        String title = result.findChildBy(By.xpath(".//h3")).getText();
-        
         LOGGER.info("-----------------------------");
-        LOGGER.info("First result Title: " +  title);
-        LOGGER.info("First result URL: " + url);
+        LOGGER.info("First result Title: " +  resultsPage.getFirstResultTitle());
+        LOGGER.info("First result URL: " + resultsPage.getFirstResultURL());
         LOGGER.info("-----------------------------");
 
-        // get information on the right hand side
-        DomElement description = resultsPage.getRHS().findChildBy(By.className("kno-rdesc"));
-        assertEquals(
-            "Description\nPokémon is a Japanese media franchise consisting of video games, animated series and films, "
-            + "a trading card game, and other related media. The franchise takes place in a shared universe in which"
-            + " humans co-exist with creatures known as Pokémon, a large variety of species endowed with special " 
-            + "powers. Wikipedia",  description.getText());
-
-        // click the first result
-        result.findChildBy(By.xpath(".//a")).click();
+        resultsPage.clickFirstResult();
         resultsPage.waitUntilGone();
 
-        // create new page and get url to compare
+        // The page URL for pokemon blocks interactions with selenium automated test
         SimplePage page = assertNewPage(SimplePage::new);
-        assertEquals(url, page.getURL());
+        assertEquals(expectedURL, page.getURL());
+        System.out.println(page.getURL());
     }
 }
