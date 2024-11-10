@@ -4,11 +4,11 @@ import org.openqa.selenium.By;
 
 import edu.rit.swen253.utils.DomElement;
 
-public class YoutubeSearchResults {
+public class YouTubeSearchResult {
 
     private final DomElement videoElement;
 
-    public YoutubeSearchResults(final DomElement viewContainer) {
+    public YouTubeSearchResult(final DomElement viewContainer) {
         this.videoElement = viewContainer;
     }
 

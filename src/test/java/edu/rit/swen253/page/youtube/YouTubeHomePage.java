@@ -13,15 +13,15 @@ import edu.rit.swen253.page.AbstractPage;
 import edu.rit.swen253.utils.DomElement;
 import edu.rit.swen253.utils.SeleniumUtils;
 
-public class YouTubeHome extends AbstractPage {
+public class YouTubeHomePage extends AbstractPage {
 
-    private static final Logger LOGG = Logger.getLogger(YouTubeHome.class.getName());
+    private static final Logger LOGG = Logger.getLogger(YouTubeHomePage.class.getName());
     private static final By MAIN_CONTENT_FINDER = By
             .cssSelector("div#content.style-scope.ytd-app");
 
     private DomElement mainContent;
 
-    public YouTubeHome() {
+    public YouTubeHomePage() {
         super();
 
         try {
@@ -46,11 +46,11 @@ public class YouTubeHome extends AbstractPage {
         LOGG.info("Search button clicked");
     }
 
-    public List<YoutubeSearchResults> getSearchResults() {
+    public List<YouTubeSearchResult> getSearchResults() {
         DomElement searchResults = mainContent.findChildBy(By.cssSelector("ytd-search"));
         return searchResults.findChildrenBy(By.cssSelector("ytd-video-renderer"))
                 .stream()
-                .map(YoutubeSearchResults::new)
+                .map(YouTubeSearchResult::new)
                 .toList();
     }
 }

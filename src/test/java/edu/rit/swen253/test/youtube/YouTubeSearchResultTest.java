@@ -10,18 +10,18 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
-import edu.rit.swen253.page.youtube.YouTubeHome;
-import edu.rit.swen253.page.youtube.YoutubeSearchResults;
+import edu.rit.swen253.page.youtube.YouTubeHomePage;
+import edu.rit.swen253.page.youtube.YouTubeSearchResult;
 import edu.rit.swen253.test.AbstractWebTest;
 import edu.rit.swen253.utils.SeleniumUtils;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class YouTubeSearchResultsTest extends AbstractWebTest {
+public class YouTubeSearchResultTest extends AbstractWebTest {
 
-    private static final Logger LOGG = Logger.getLogger(YouTubeHome.class.getName());
+    private static final Logger LOGG = Logger.getLogger(YouTubeHomePage.class.getName());
 
-    private YouTubeHome homePage;
-    private YoutubeSearchResults firstResult;
+    private YouTubeHomePage homePage;
+    private YouTubeSearchResult firstResult;
 
     /**
      * Navigate to the youtube home page
@@ -29,7 +29,7 @@ public class YouTubeSearchResultsTest extends AbstractWebTest {
     @Test
     @Order(1)
     public void navigateToHomePage() {
-        homePage = navigateToPage("https://www.youtube.com/", YouTubeHome::new);
+        homePage = navigateToPage("https://www.youtube.com/", YouTubeHomePage::new);
     }
 
     /**
@@ -40,7 +40,7 @@ public class YouTubeSearchResultsTest extends AbstractWebTest {
     public void testPerformSearchResults() {
         homePage.performSearch("first youtube video");
 
-        List<YoutubeSearchResults> searchResults = homePage.getSearchResults();
+        List<YouTubeSearchResult> searchResults = homePage.getSearchResults();
         assertTrue(searchResults.size() > 0, "No search results found");
 
         firstResult = searchResults.get(0);
