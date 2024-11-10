@@ -1,32 +1,27 @@
 package edu.rit.swen253.test.google;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.List;
 import java.util.logging.Logger;
 
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import edu.rit.swen253.page.SimplePage;
 import edu.rit.swen253.page.google.GoogleSearchPage;
 import edu.rit.swen253.page.google.GoogleSearchResultsPage;
 import edu.rit.swen253.test.AbstractWebTest;
-import edu.rit.swen253.utils.DomElement;
-import edu.rit.swen253.utils.SeleniumUtils;
 
+/**
+ * Test class to search for a query and navigate to the first element
+ * @author <a href='mailto:rhy2781@rit.edu'>Robert Yamasaki</a>
+ */
 public class GoogleTest extends AbstractWebTest {
 
     private GoogleSearchPage searchPage;
     private GoogleSearchResultsPage resultsPage;
-    private static final String query = "openai";
-    private static final String expectedURL = "https://openai.com/";
+    private static final String query = "pokemon";
+    private static final String expectedURL = "https://www.pokemon.com/us";
     private static final Logger LOGGER = Logger.getLogger(GoogleSearchResultsPage.class.getName());
 
 
@@ -40,13 +35,13 @@ public class GoogleTest extends AbstractWebTest {
     }
 
     /**
-     * Test that we insert the text and submit the search
+     * Insert the query into the search component and verify that the query was inserted correctly before
+     * executing the search
      */
     @Test
     @Order(2)
     public void searchFromGoogle(){
-        String res = searchPage.insertTextIntoSearchComponent(query);
-        assertEquals(query, res);
+        assertEquals(query, searchPage.insertTextIntoSearchComponent(query));
         searchPage.executeSearch();
         searchPage.waitUntilGone();
         resultsPage = assertNewPage(GoogleSearchResultsPage::new);
@@ -54,8 +49,10 @@ public class GoogleTest extends AbstractWebTest {
 
 
     /**  
-     * Validate that the correct search was executed, verify the url and 
-     * title of the first element, and navigate to that page
+     * Validate that the correct search was executed
+     * 1. The search element should have the correct query
+     * 2. Display the url and the title associated with the first element.
+     * 3. Navigate to the corresponding page and verify the URL
      */
     @Test
     @Order(3)
@@ -72,8 +69,8 @@ public class GoogleTest extends AbstractWebTest {
         resultsPage.waitUntilGone();
 
         // The page URL for pokemon blocks interactions with selenium automated test
+        // The content of the page may not load, but the url will due to data scraping preventions
         SimplePage page = assertNewPage(SimplePage::new);
         assertEquals(expectedURL, page.getURL());
-        System.out.println(page.getURL());
     }
 }
