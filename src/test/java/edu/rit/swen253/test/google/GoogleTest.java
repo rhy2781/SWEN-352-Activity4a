@@ -69,7 +69,8 @@ public class GoogleTest extends AbstractWebTest {
         resultsPage.waitUntilGone();
 
         // The page URL for pokemon blocks interactions with selenium automated test
-        // The content of the page may not load, but the url will due to data scraping preventions
+        // The content of the page may not load due to data scraping preventions within certain web drivers
+        // the URL of the page is unaffected
         SimplePage page = assertNewPage(SimplePage::new);
         assertEquals(expectedURL, page.getURL());
     }
