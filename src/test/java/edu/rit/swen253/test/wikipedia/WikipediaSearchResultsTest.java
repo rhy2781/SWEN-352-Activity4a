@@ -11,7 +11,6 @@ import org.junit.jupiter.api.TestMethodOrder;
 
 import edu.rit.swen253.page.wikipedia.WikipediaHome;
 import edu.rit.swen253.page.wikipedia.WikipediaSearchResults;
-import edu.rit.swen253.page.youtube.YouTubeHome;
 import edu.rit.swen253.test.AbstractWebTest;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)

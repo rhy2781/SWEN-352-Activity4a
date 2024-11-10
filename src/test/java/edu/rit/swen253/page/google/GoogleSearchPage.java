@@ -22,4 +22,11 @@ public class GoogleSearchPage extends AbstractPage{
             fail("Main content panel is not found");
         }
     }
+
+    public DomElement getSearchComponent(){
+        DomElement res = null;
+        res = mainContentPanel.findChildBy(By.name("q"));
+        return res;
+    }
+
 }
