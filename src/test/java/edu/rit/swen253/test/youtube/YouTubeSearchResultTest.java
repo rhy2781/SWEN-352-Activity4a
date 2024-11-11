@@ -12,19 +12,24 @@ import org.junit.jupiter.api.TestMethodOrder;
 
 import edu.rit.swen253.page.youtube.YouTubeHomePage;
 import edu.rit.swen253.page.youtube.YouTubeSearchResult;
+import edu.rit.swen253.page.youtube.YouTubeVideoPage;
 import edu.rit.swen253.test.AbstractWebTest;
-import edu.rit.swen253.utils.SeleniumUtils;
 
+/**
+ * Tests for YouTube search results functionality.
+ * 
+ * @author Austyn Wright
+ */
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class YouTubeSearchResultTest extends AbstractWebTest {
 
-    private static final Logger LOGG = Logger.getLogger(YouTubeHomePage.class.getName());
+    private static final Logger LOGG = Logger.getLogger(YouTubeSearchResultTest.class.getName());
 
     private YouTubeHomePage homePage;
     private YouTubeSearchResult firstResult;
 
     /**
-     * Navigate to the youtube home page
+     * Navigate to the YouTube home page
      */
     @Test
     @Order(1)
@@ -33,47 +38,51 @@ public class YouTubeSearchResultTest extends AbstractWebTest {
     }
 
     /**
-     * Perform a search and verify that results are returned
+     * Performs a search and verifies that results are returned.
      */
     @Test
     @Order(2)
     public void testPerformSearchResults() {
+        // Perform a search for "first youtube video"
         homePage.performSearch("first youtube video");
 
+        // Retrieve the search results
         List<YouTubeSearchResult> searchResults = homePage.getSearchResults();
-        assertTrue(searchResults.size() > 0, "No search results found");
 
+        // Store the first search result
         firstResult = searchResults.get(0);
 
-        LOGG.info("-----------------------------");
         LOGG.info("First result Title: " + firstResult.getTitle());
         LOGG.info("First result URL: " + firstResult.getUrl());
-        LOGG.info("-----------------------------");
     }
 
     /**
-     * Test to verify that the first result of search is youtubes first video
+     * Tests to verify that the first result of the search is YouTube's first video.
      */
     @Test
     @Order(3)
     public void testFirstResult() {
+        // Ensure the first result is not null
+        assertNotNull(firstResult, "First search result is null");
+
         String title = firstResult.getTitle();
         assertEquals("Me at the zoo", title, "First result title does not match expected title");
     }
 
     /**
-     * Click the first result of the search and verify the video page title
+     * Clicks the first result of the search and verifies the video page title.
      */
     @Test
     @Order(4)
     public void testClickFirstResult() {
+        // Ensure the first result is not null
+        assertNotNull(firstResult, "First search result is null");
+
         firstResult.click();
 
-        String expectedTitle = "Me at the zoo - YouTube";
-        SeleniumUtils.getShortWait().until(
-                driver -> driver.getTitle().contains(expectedTitle));
+        YouTubeVideoPage videoPage = new YouTubeVideoPage();
+        String actualTitle = videoPage.getTitle();
 
-        String actualTitle = SeleniumUtils.getDriver().getTitle();
-        assertTrue(expectedTitle.equals(actualTitle), "Page title after clicking does not match expected title");
+        assertEquals("Me at the zoo - YouTube", actualTitle, "Page title after clicking does not match expected title");
     }
 }
