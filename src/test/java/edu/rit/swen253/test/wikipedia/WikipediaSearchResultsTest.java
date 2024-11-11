@@ -10,8 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.openqa.selenium.Keys;
 
-import edu.rit.swen253.page.google.GoogleSearchResultsPage;
-import edu.rit.swen253.page.wikipedia.WikipediaHome;
 import edu.rit.swen253.page.wikipedia.WikipediaSearchPage;
 import edu.rit.swen253.page.wikipedia.WikipediaSearchResults;
 import edu.rit.swen253.test.AbstractWebTest;
@@ -25,7 +23,9 @@ public class WikipediaSearchResultsTest extends AbstractWebTest {
     private WikipediaSearchResults firstSearchResults;
     private static final Logger LOGGER = Logger.getLogger(WikipediaSearchResults.class.getName());
 
-   
+    /**
+     * Navigate to the Wikipedia Home page
+     */
     @Test
     @Order(1)
     public void navigateToHomePage() {
@@ -34,7 +34,9 @@ public class WikipediaSearchResultsTest extends AbstractWebTest {
     }
 
 
-    
+    /**
+     * Insert the query into the search component and view the result title/url
+     */
     @Test
     @Order(2)
     public void testPerformSearchResults() {
@@ -51,10 +53,10 @@ public class WikipediaSearchResultsTest extends AbstractWebTest {
         LOGGER.info("-----------------------------");
         
     }
-    
-   
-
-    
+    /**
+    * Validate that the correct search was executed:
+    * 1. The first search element should have the correct title
+     */    
     @Test
     @Order(3)
     public void testFirstResult() {
@@ -65,6 +67,10 @@ public class WikipediaSearchResultsTest extends AbstractWebTest {
     
     @Test
     @Order(4)
+    /**
+    * New Page is Acessed
+    * -ensuring that realm of the mad god main page of wikipedia is accessed and validated
+     */   
     public void testClickFirstResult() {
         firstSearchResults.click();
 
@@ -74,6 +80,9 @@ public class WikipediaSearchResultsTest extends AbstractWebTest {
 
         String actualTitle = SeleniumUtils.getDriver().getTitle();
         assertTrue(expectedTitle.equals(actualTitle), "Page title does not match expected title");
+        LOGGER.info("first result clicked");
+
+        
     }
     
     

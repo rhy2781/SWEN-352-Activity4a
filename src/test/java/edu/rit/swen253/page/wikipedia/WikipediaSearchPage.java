@@ -7,7 +7,10 @@ import org.openqa.selenium.TimeoutException;
 
 import edu.rit.swen253.page.AbstractPage;
 import edu.rit.swen253.utils.DomElement;
-
+/**
+ * Object pertaining to the structure of the wikipedia gome page
+ * @author <a href='mailto:tsf2802@rit.edu'>Takumi Fukuzawa</a>
+ */
 public class WikipediaSearchPage extends AbstractPage {
      private static final By MAIN_CONTENT_FINDER = By.tagName("main");
 
@@ -21,7 +24,10 @@ public class WikipediaSearchPage extends AbstractPage {
             fail("Main content panel is not found");
         }
     }
-
+    /**
+     * A method of getting the searchinput content. 
+     * @return the search component for the search
+     */
     public DomElement getSearchComponent(){
         DomElement res = null;
         res = mainContentPanel.findChildBy(By.cssSelector("input#searchInput"));
